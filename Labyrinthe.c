@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <time.h>
 #define HAUTEUR 24
 #define LARGEUR 64
  
@@ -15,6 +16,7 @@ int is_finish(int x, int y, int hauteur, int largeur, char grille[hauteur][large
     return (grille[y][x] == 'X');
 }
  
+
 int niveau1() {
     char grille[HAUTEUR][LARGEUR] = {
     "################################",
@@ -29,7 +31,7 @@ int niveau1() {
  
 //Pour chaque niveau les valeurs insérées dans x et y représentent le point d'apparition (les coordonnées) du joueur dans le niveau
     int x = 1, y = 1;
- 
+    int start = clock();
     int move_x, move_y;
  
     initscr();
@@ -64,9 +66,20 @@ int niveau1() {
     refresh();
     clrtoeol();
     refresh();
-    endwin();
-//retour au menu 
-    menu();
+//retour au menu
+        int end = clock();
+        printf("\n\n\nVotre temps est de  : %g s\n", ((double)(end - start) / CLOCKS_PER_SEC)*1000);
+        printf("Souhaitez vous retourner au menu ? :  1\n");
+        int rep;
+        scanf("%d", &rep);
+        if(rep == 1){
+            endwin();
+            menu();
+        }else{
+            printf("ERREUR \n");
+            exit(EXIT_SUCCESS);
+        }
+    
 }
  
 int niveau2() {
@@ -87,7 +100,7 @@ int niveau2() {
  
  //  Pour chaque niveau les valeurs inserees dans x et y representent le point d'apparition (les coordonnees) du joueur dans le niveau
     int x = 1, y = 1;
- 
+    int start = clock();
     int move_x, move_y;
  
     initscr();
@@ -124,8 +137,19 @@ int niveau2() {
     clrtoeol();
     refresh();
     endwin();
-//retour au menu 
-    menu();
+//retour au menu
+        int end = clock();
+        printf("\n\n\nVotre temps est de  : %g s\n", ((double)(end - start) / CLOCKS_PER_SEC)*1000);
+        printf("Souhaitez vous retourner au menu ? :  1\n");
+        int rep;
+        scanf("%d", &rep);
+        if(rep == 1){
+            endwin();
+            menu();
+        }else{
+            printf("ERREUR \n");
+            exit(EXIT_SUCCESS);
+        }
 }
  
 int niveau3() {
@@ -157,7 +181,7 @@ int niveau3() {
  
  
     int x = 1, y = 1;
- 
+    int start = clock();
     int move_x, move_y;
  
     initscr();
@@ -170,11 +194,11 @@ int niveau3() {
         for(int i = 0; i < HAUTEUR; ++i) {
             mvprintw(i, 0, "%s", grille[i]);
         }
- 
+
         mvprintw(y, x, "@");
         mvprintw(y, x, "");
         refresh();
- 
+
         move_x = x; move_y = y;
  //le switch permet de deplacer le joueur a travers la carte
         switch(getch()) {
@@ -188,34 +212,52 @@ int niveau3() {
             x = move_x; y = move_y;
         }
     } while(! is_finish(x, y, HAUTEUR, LARGEUR, grille));
- 
+    
     refresh();
     clrtoeol();
     refresh();
     endwin();
 //retour au menu 
-    menu();
+        int end = clock();
+        printf("\n\n\nVotre temps est de  : %g s\n", ((double)(end - start) / CLOCKS_PER_SEC)*100);
+        printf("Souhaitez vous retourner au menu ? :  1\n");
+        int rep;
+        scanf("%d", &rep);
+        if(rep == 1){
+            endwin();
+            menu();
+        }else{
+            printf("ERREUR \n");
+            exit(EXIT_SUCCESS);
+        }
 }
  
 int menu(){
 //Permet d'effacer la console ou "l'ecran de sortie"
     system("clear");
-    int choixniveau = 0;
+    int choixniveau;
 //Le joueur choisit son niveau et donc la difficulte
     printf("Choisissez un niveau :\n");
+    printf("----------------------------- \n");
     printf("NIVEAU 1 (Facile)                     : 1\n");
     printf("NIVEAU 2 (Moyen)                      : 2\n");
     printf("NIVEAU 3 (Difficile)                  : 3\n");
+    printf("----------------------------- \n");
+    printf("Votre choix : \n");
     scanf("%d",&choixniveau);
-    if(choixniveau==1){
-        niveau1();
-    }
-    if(choixniveau==2){
-        niveau2();
-    }
-    if(choixniveau==3){
-        niveau3();
-    }
+    switch(choixniveau){
+            case 1 :
+                niveau1();
+                break;
+                
+            case 2 :
+                niveau2();
+                break;
+
+            case 3 :
+                niveau3();
+                break;
+        }
 }
  
 int main(){
