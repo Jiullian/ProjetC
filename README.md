@@ -31,7 +31,7 @@ Il s'agit ici de bibliothèques dites "classiques".
 ***
 Voici une liste des différents logiciels utilisées pour mener à bien le projet :
 - Git
-- GitHub (Site internet) = https://github.com/Jiullian/projet.git
+- GitHub (Site internet) = https://github.com/Jiullian/ProjetC.git
 
 ## FAQs
 ***
